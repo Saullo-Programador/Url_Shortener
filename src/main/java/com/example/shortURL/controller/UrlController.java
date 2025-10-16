@@ -17,6 +17,11 @@ public class UrlController {
         this.urlService = urlService;
     }
 
+    @GetMapping("/")
+    public String test(){
+        return "Hello World!";
+    }
+
     // Cria uma nova URL encurtada
     @PostMapping("/shorten")
     public ResponseEntity<Url> shortenUrl(
