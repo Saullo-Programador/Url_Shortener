@@ -41,7 +41,7 @@ public class UrlController {
     }
 
     //(Opcional) Retorna os dados de uma URL encurtada pelo código.
-    @GetMapping("/{code}")
+    @GetMapping("/url/{code}")
     public ResponseEntity<Url> getUrlInfo(@PathVariable String code) {
         return urlService.findByNameShortCode(code)
                 .map(ResponseEntity::ok)
