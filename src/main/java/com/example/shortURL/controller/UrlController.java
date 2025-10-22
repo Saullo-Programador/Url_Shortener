@@ -43,7 +43,7 @@ public class UrlController {
     }
 
     //Redirecionamento
-    @GetMapping("/{code}")
+    @GetMapping("/r/{code}")
     public ResponseEntity<Void> redirect(@PathVariable String code){
         Optional<Url> urlOptional = urlService.findByNameShortCode(code);
         Url url = urlOptional.get();
