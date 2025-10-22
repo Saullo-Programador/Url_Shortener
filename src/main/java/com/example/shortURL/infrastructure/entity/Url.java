@@ -13,6 +13,9 @@ public class Url {
     private String id;
 
     @NotBlank
+    private String nameSite;
+
+    @NotBlank
     private String originalUrl;
 
     @NotBlank
@@ -22,7 +25,8 @@ public class Url {
     @Size(min = 3, message = "O Name should have at least 3 characters")
     private String nameShortCode;
 
-    public Url(String originalUrl, String nameShortCode, String shortenUrl) {
+    public Url(String nameSite, String originalUrl, String nameShortCode, String shortenUrl) {
+        this.nameSite = nameSite;
         this.originalUrl = originalUrl;
         this.nameShortCode = nameShortCode;
         this.shortenUrl = shortenUrl;
@@ -39,6 +43,10 @@ public class Url {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getNameSite() {return nameSite; }
+
+    public void  setNameSite(String nameSite) {this.nameSite = nameSite; }
 
     public String getOriginalUrl() {
         return originalUrl;

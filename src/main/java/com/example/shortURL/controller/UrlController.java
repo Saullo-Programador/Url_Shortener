@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -25,14 +26,20 @@ public class UrlController {
     // Cria uma nova URL encurtada
     @PostMapping("/shorten")
     public ResponseEntity<Url> shortenUrl(
+            @RequestParam String nameSite,
             @RequestParam String originalUrl,
             @RequestParam(required = false) String nameShortCode
     ){
         if (nameShortCode == null || nameShortCode.isEmpty()){
             nameShortCode = generateShortCode();
         }
-        Url url = urlService.createShortUrl(originalUrl, nameShortCode);
+        Url url = urlService.createShortUrl(nameSite, originalUrl, nameShortCode);
         return ResponseEntity.ok(url);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<Url>> getAll(){
+        return ResponseEntity.ok(urlService.urlList());
     }
 
     //Redirecionamento
