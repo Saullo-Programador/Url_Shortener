@@ -26,7 +26,7 @@ public class UrlController {
 
     // Cria uma nova URL encurtada
     @PostMapping("/shorten")
-    public ResponseEntity<Url> shortenUrl(@RequestParam UrlRequestDto urlRequest){
+    public ResponseEntity<Url> shortenUrl(@RequestBody UrlRequestDto urlRequest){
         String nameShortCode = urlRequest.getNameShortCode();
         if (nameShortCode == null || nameShortCode.isEmpty()){
             nameShortCode = generateShortCode();
