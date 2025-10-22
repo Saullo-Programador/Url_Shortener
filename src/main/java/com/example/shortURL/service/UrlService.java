@@ -36,7 +36,10 @@ public class UrlService {
                 ? "http://localhost:" + serverPort
                 : configuredBaseUrl;
 
-        String shortenUrl = baseUrl + "/r/" + nameShortCode;
+        String shortenUrl = baseUrl.endsWith("/")
+                ? baseUrl + "r/" + nameShortCode
+                : baseUrl + "/r/" + nameShortCode;
+
 
 
         Url urlNew = new Url();
