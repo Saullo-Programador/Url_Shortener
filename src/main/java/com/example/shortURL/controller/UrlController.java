@@ -1,5 +1,6 @@
 package com.example.shortURL.controller;
 
+import com.example.shortURL.dto.UrlRequestDto;
 import com.example.shortURL.infrastructure.entity.Url;
 import com.example.shortURL.service.UrlService;
 import org.springframework.http.ResponseEntity;
@@ -25,32 +26,41 @@ public class UrlController {
 
     // Cria uma nova URL encurtada
     @PostMapping("/shorten")
-    public ResponseEntity<Url> shortenUrl(
-            @RequestParam String nameSite,
-            @RequestParam String originalUrl,
-            @RequestParam(required = false) String nameShortCode
-    ){
+    public ResponseEntity<Url> shortenUrl(@RequestParam UrlRequestDto urlRequest){
+        String nameShortCode = urlRequest.getNameShortCode();
         if (nameShortCode == null || nameShortCode.isEmpty()){
             nameShortCode = generateShortCode();
         }
-        Url url = urlService.createShortUrl(nameSite, originalUrl, nameShortCode);
+        Url url = urlService.createShortUrl(
+                urlRequest.getNameSite(),
+                urlRequest.getOriginalUrl(),
+                nameShortCode
+        );
         return ResponseEntity.ok(url);
     }
 
     @GetMapping("/list")
     public ResponseEntity<List<Url>> getAll(){
-        return ResponseEntity.ok(urlService.urlList());
+        List<Url> urls = urlService.urlList();
+        return urls.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(urls);
     }
 
     //Redirecionamento
     @GetMapping("/r/{code}")
-    public ResponseEntity<Void> redirect(@PathVariable String code){
+    public ResponseEntity<Void> redirect(@PathVariable String code) {
         Optional<Url> urlOptional = urlService.findByNameShortCode(code);
+        if (urlOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
         Url url = urlOptional.get();
         return ResponseEntity.status(302)
                 .location(URI.create(url.getOriginalUrl()))
                 .build();
     }
+
 
     //(Opcional) Retorna os dados de uma URL encurtada pelo código.
     @GetMapping("/url/{code}")
