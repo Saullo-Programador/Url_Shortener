@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/url/")
+@RequestMapping("/")
 public class UrlController {
     private final UrlService urlService;
 
@@ -19,8 +19,8 @@ public class UrlController {
     }
 
     @GetMapping("/")
-    public String test(){
-        return "Hello World!";
+    public String Hello(){
+        return "Sejam Bem-Vindo ao seu Encurtador";
     }
 
     // Cria uma nova URL encurtada
