@@ -1,38 +1,24 @@
-package com.example.shortURL.infrastructure.entity;
+package com.example.shortURL.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Data
-@Document(collection = "urls")
-public class Url {
-    @Id
+public class UrlResponseDto {
     private String id;
-
-    @NotBlank
     private String nameSite;
-
-    @NotBlank
     private String originalUrl;
-
-    @NotBlank
     private String shortenUrl;
-
-    @NotBlank
-    @Size(min = 3, message = "O Name should have at least 3 characters")
     private String nameShortCode;
 
-    public Url(String nameSite, String originalUrl, String nameShortCode, String shortenUrl) {
+    public UrlResponseDto(){}
+
+    public UrlResponseDto(String id, String nameSite, String originalUrl, String shortenUrl, String nameShortCode){
+        this.id = id;
         this.nameSite = nameSite;
         this.originalUrl = originalUrl;
-        this.nameShortCode = nameShortCode;
         this.shortenUrl = shortenUrl;
+        this.nameShortCode = nameShortCode;
     }
-
-    public Url() {}
 
     public String getId() {
         return id;
